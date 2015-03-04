@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>用户名校验实例ajax</title>
+
+    <script type="text/javascript" src="jslib/verifyown.js"></script>
+
+</head>
+<body>
+用户校验的ajax实例，请输入用户名：<br/>
+<!--ajax方式不需要使用表单进行数据提交，因此不用写表单标签-->
+<!--ajax方式不需要name属性，需要一个id的属性-->
+<input type="text" id="userName"/>
+<input type="button" value="校验" onclick="verify()" />
+
+<div id="msg"></div>
+</body>
+</html>
