@@ -137,19 +137,20 @@ public class FileService {
         return fileUtils.renameFile(lists, rename);
     }
 
-    public void splitFile(File srcFile, File destDir, int split_size, String suffix) {
+    public boolean splitFile(File srcFile, File destDir, int split_size, String suffix) {
+        boolean flag = false;
         int indexStart = suffix.indexOf(".");
-        if (indexStart < 0)
-            suffix = "." + suffix;
+        if (indexStart < 0) suffix = "." + suffix;
+
+        System.out.println("size:" + srcFile);
 
         try {
-            System.out.println("size:" + srcFile);
-
             fileUtils.splitFile(srcFile, destDir, split_size, suffix);
+            flag = true;
         } catch (IOException e) {
-
             e.printStackTrace();
         }
+        return flag;
     }
 
     //合并文件

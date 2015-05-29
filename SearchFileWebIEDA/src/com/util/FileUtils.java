@@ -264,8 +264,6 @@ public class FileUtils {
         //到这里基本的合并的目录文件判断完毕
         //合并
         merge(srcDir, filename, count, splitSuffix);
-
-
     }
 
     //合并文件操作

@@ -28,19 +28,26 @@ public class SplitFileServlet extends HttpServlet {
         FileService fs = new FileService();
 
         FileInputStream fis = new FileInputStream(fileSplitPath);
+        File tempf = new File(fileSplitPath);
+        System.out.println("splitFIlelength:" + (tempf.length() / 1024) + "\tlastmodify:" + tempf.lastModified());
         if ((size * 1000) > fis.available()) {
-            request.setAttribute("boundsSize", "输入分解大小超过文件大小!");
+            request.setAttribute("message", "输入分解大小超过文件大小!");
             return;
         }
 
         System.out.println(fis.available() / 1024);
 
-        fs.splitFile(new File(fileSplitPath), new File(putPath), size, suffixname);
+        boolean flag = fs.splitFile(new File(fileSplitPath), new File(putPath), size, suffixname);
 
-        request.setAttribute("ok", "1");
-        request.setAttribute("title", "拆分成功");
-        request.setAttribute("message", "拆分文件成功!文件位于" + putPath);
-
+        if (flag) {
+            request.setAttribute("ok", "1");
+            request.setAttribute("title", "拆分成功");
+            request.setAttribute("message", "拆分文件成功!文件位于" + putPath);
+        } else {
+            request.setAttribute("ok", "-1");
+            request.setAttribute("title", "拆分失败");
+            request.setAttribute("message", "拆分文件失败!输入分解大小超过文件大小或其他未知原因");
+        }
         request.getRequestDispatcher("/WEB-INF/jsp/successT.jsp").forward(request, response);
     }
 
