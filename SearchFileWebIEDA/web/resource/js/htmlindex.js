@@ -95,7 +95,7 @@ $(document).keyup(function (event) {
         gameKeycount++;
         if (gameKeycount == 5) {
             var myurl = location.host;
-            window.location.href = "http://" + myurl + "/SearchFileWebIDEA/otherInfo/whiteDiv.html";
+            window.location.href = "http://" + myurl + "/SearchFileWebIDEA/otherInfo/htmlgame/whiteDiv.html";
         }
     }
     if (event.keyCode == 32) {
