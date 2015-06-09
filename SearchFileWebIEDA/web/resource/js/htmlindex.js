@@ -86,7 +86,35 @@ function goToOther(msgObj) {
     }
 }
 var gameKeycount = 0;
+var lkey = 0;//76
+var okey = 0;//79
+var vkey = 0;//86
+var ekey = 0;//69
 $(document).keyup(function (event) {
+    //love
+    //alert(event.keyCode);
+    if (event.keyCode == 108 || event.keyCode == 76) {
+        lkey++;
+    }
+    if (event.keyCode == 111 || event.keyCode == 79) {
+        okey++;
+    }
+    if (event.keyCode == 118 || event.keyCode == 86) {
+        vkey++;
+    }
+    if (event.keyCode == 101 || event.keyCode == 69) {
+        ekey++;
+    }
+    if (lkey > 0) {
+        if (okey > 0) {
+            if (vkey > 0) {
+                if (ekey > 0) {
+                    var myurl = location.host;
+                    window.location.href = "http://" + myurl + "/SearchFileWebIDEA/otherInfo/htmlgame/love/index.html";
+                }
+            }
+        }
+    }
     if (event.keyCode == 13) {
         $("#submit_search").trigger("click");
         verify();
