@@ -16,6 +16,8 @@ import java.util.List;
  * Created by Pet on 2015-07-02.
  */
 public class Xls2K7Utils {
+    private static String[] dataTitles = {"序号", "得分", "学生姓名", "学院名称", "课程名称"};
+
     public static String getFileName(String name) {
         if (name.contains("/") && name.contains(".")) {
             int startIndex = name.lastIndexOf("/");
@@ -29,72 +31,16 @@ public class Xls2K7Utils {
         return name;
     }
 
+
     /**
-     * 读取xls文件内容
-     *
-     * @return List<bean.XlsDto>对象
-     * @throws java.io.IOException 输入/输出(i/o)异常
+     * 获取标题和其下标
+     * @param readXls
+     * @return
+     * @throws IOException
      */
-    public static List<XlsDto> readXls(String readXls) throws IOException {
-        InputStream in = new FileInputStream(readXls);
-        XSSFWorkbook XSSFWorkbook = new XSSFWorkbook(in);
-        XlsDto xlsDto = null;
-        List<XlsDto> dtolists = new ArrayList<XlsDto>();
-        // 循环工作表sheet
-        for (int i = 0; i < XSSFWorkbook.getNumberOfSheets(); i++) {
-            XSSFSheet XSSFSheet = XSSFWorkbook.getSheetAt(i);
-            if (null == XSSFSheet) {
-                continue;
-            }
-            // 循环行row
-            for (int j = 0; j <= XSSFSheet.getLastRowNum(); j++) {
-                XSSFRow xssfRow = XSSFSheet.getRow(j);
-
-                if (null == xssfRow) {
-                    continue;
-                }
-                //当读取到第一行数据(非空),查看其关键字,如title,则放入对应的bean属性中
-
-                xlsDto = new XlsDto();
-                // 循环列Cell
-                // 0学号 1姓名 2学院 3课程名 4成绩
-                // for (int cellNum = 0; cellNum <=4; cellNum++) {
-
-                XSSFCell stuNo = xssfRow.getCell(0);
-                if (null == stuNo) {
-                    continue;
-                }
-                xlsDto.setStuNo(getValue(stuNo));
-                XSSFCell name = xssfRow.getCell(1);
-                if (null == name) {
-                    continue;
-                }
-                xlsDto.setName(getValue(name));
-                XSSFCell college = xssfRow.getCell(2);
-                if (null == college) {
-                    continue;
-                }
-                xlsDto.setCollege(getValue(college));
-                XSSFCell courseName = xssfRow.getCell(3);
-                if (null == courseName) {
-                    continue;
-                }
-                xlsDto.setCourseName(getValue(courseName));
-                XSSFCell score = xssfRow.getCell(4);
-                if (null == score) {
-                    continue;
-                }
-                xlsDto.setScore(Float.parseFloat(getValue(score)));
-                dtolists.add(xlsDto);
-            }
-        }
-        return dtolists;
-    }
-
     public static List getTitlesAndRowIndex(String readXls) throws IOException {
         InputStream in = new FileInputStream(readXls);
         XSSFWorkbook XSSFWorkbook = new XSSFWorkbook(in);
-        XlsDto xlsDto = null;
         List lists = new ArrayList();
 
         String[] cellTitles = new String[dataTitles.length];
@@ -112,29 +58,23 @@ public class Xls2K7Utils {
                 if (null == XSSFRow) {
                     continue;
                 }
-
                 //当读取到第一行数据(非空),查看其关键字,如title,则放入对应的bean属性中
-
                 boolean hasTitle = false;
                 for (int k = 0; k < dataTitles.length; k++) {
                     XSSFCell temp = XSSFRow.getCell(k);
                     if (null != temp) {
                         String title = getValue(temp);
-                        cellTitles[k] = title;
-                        /*if (null != title) {
-                            cellTitles[k] = title;
-                            if (titles.equals(cellTitles[k])) {
-                                hasTitle = true;
-                                //记录下标题的行号
+                        for (int l = 0; l < dataTitles.length; l++) {
+                            //System.out.println("title:"+title+","+j+"datatitle"+dataTitles[l]);
+                            if (dataTitles[l].equals(title)) {
+                                cellTitles[k] = title;
                                 rowIndex = j;
                             }
-                        }*/
+                        }
                     }
                 }
-                rowIndex = j;
-                break ok;
-                //if(hasTitle)break ok;
             }
+            break ok;
         }
 
         lists.add(rowIndex);//+1数据的当前行
@@ -142,7 +82,6 @@ public class Xls2K7Utils {
         return lists;
     }
 
-    private static String[] dataTitles = {"序号", "得分", "学生姓名", "学院名称", "课程名称"};
 
     public static List arrangeList(List lists, String readXls) throws IOException {
         List myList = new ArrayList();
@@ -152,7 +91,7 @@ public class Xls2K7Utils {
         List dtolists = new ArrayList();
         // 1工作表sheet
         XSSFSheet XSSFSheet = XSSFWorkbook.getSheetAt(0);
-
+        System.out.println("下标:" + lists.get(0));
         // 循环行row
         int rowIndex = Integer.parseInt(lists.get(0).toString());
         rowIndex++;
@@ -168,32 +107,32 @@ public class Xls2K7Utils {
 
             for (int i = 0; i < titles.length; i++) {
 
-                int stunoIndex = readXlsTitileIndex(titles, "序号");
+                int stunoIndex = readXlsTitileIndex(titles, dataTitles[0]);
                 XSSFCell stuNo = XSSFRow.getCell(stunoIndex);
                 if (null == stuNo) {
                     continue;
                 }
                 xlsDto.setStuNo(getValue(stuNo));
-                int scoreIndex = readXlsTitileIndex(titles, "得分");
+                int scoreIndex = readXlsTitileIndex(titles, dataTitles[1]);
 
                 XSSFCell score = XSSFRow.getCell(scoreIndex);
                 if (null == score) {
                     continue;
                 }
                 xlsDto.setScore(Float.parseFloat(getValue(score)));
-                int nameIndex = readXlsTitileIndex(titles, "学生姓名");
+                int nameIndex = readXlsTitileIndex(titles, dataTitles[2]);
                 XSSFCell name = XSSFRow.getCell(nameIndex);
                 if (null == name) {
                     continue;
                 }
                 xlsDto.setName(getValue(name));
-                int collegeIndex = readXlsTitileIndex(titles, "学院名称");
+                int collegeIndex = readXlsTitileIndex(titles, dataTitles[3]);
                 XSSFCell college = XSSFRow.getCell(collegeIndex);
                 if (null == college) {
                     continue;
                 }
                 xlsDto.setCollege(getValue(college));
-                int subjectIndex = readXlsTitileIndex(titles, "课程名称");
+                int subjectIndex = readXlsTitileIndex(titles, dataTitles[4]);
                 XSSFCell courseName = XSSFRow.getCell(subjectIndex);
                 if (null == courseName) {
                     continue;
@@ -247,4 +186,65 @@ public class Xls2K7Utils {
         }
 
     }
+    /**
+     * 读取xls文件内容
+     *
+     * @return List<bean.XlsDto>对象
+     * @throws java.io.IOException 输入/输出(i/o)异常
+     */
+//    public static List<XlsDto> readXls(String readXls) throws IOException {
+//        InputStream in = new FileInputStream(readXls);
+//        XSSFWorkbook XSSFWorkbook = new XSSFWorkbook(in);
+//        XlsDto xlsDto = null;
+//        List<XlsDto> dtolists = new ArrayList<XlsDto>();
+//        // 循环工作表sheet
+//        for (int i = 0; i < XSSFWorkbook.getNumberOfSheets(); i++) {
+//            XSSFSheet XSSFSheet = XSSFWorkbook.getSheetAt(i);
+//            if (null == XSSFSheet) {
+//                continue;
+//            }
+//            // 循环行row
+//            for (int j = 0; j <= XSSFSheet.getLastRowNum(); j++) {
+//                XSSFRow xssfRow = XSSFSheet.getRow(j);
+//
+//                if (null == xssfRow) {
+//                    continue;
+//                }
+//                //当读取到第一行数据(非空),查看其关键字,如title,则放入对应的bean属性中
+//
+//                xlsDto = new XlsDto();
+//                // 循环列Cell
+//                // 0学号 1姓名 2学院 3课程名 4成绩
+//                // for (int cellNum = 0; cellNum <=4; cellNum++) {
+//
+//                XSSFCell stuNo = xssfRow.getCell(0);
+//                if (null == stuNo) {
+//                    continue;
+//                }
+//                xlsDto.setStuNo(getValue(stuNo));
+//                XSSFCell name = xssfRow.getCell(1);
+//                if (null == name) {
+//                    continue;
+//                }
+//                xlsDto.setName(getValue(name));
+//                XSSFCell college = xssfRow.getCell(2);
+//                if (null == college) {
+//                    continue;
+//                }
+//                xlsDto.setCollege(getValue(college));
+//                XSSFCell courseName = xssfRow.getCell(3);
+//                if (null == courseName) {
+//                    continue;
+//                }
+//                xlsDto.setCourseName(getValue(courseName));
+//                XSSFCell score = xssfRow.getCell(4);
+//                if (null == score) {
+//                    continue;
+//                }
+//                xlsDto.setScore(Float.parseFloat(getValue(score)));
+//                dtolists.add(xlsDto);
+//            }
+//        }
+//        return dtolists;
+//    }
 }

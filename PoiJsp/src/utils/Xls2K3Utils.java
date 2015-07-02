@@ -10,74 +10,10 @@ import java.util.List;
 /**
  * Created by Pet on 2015-06-30.
  */
-public class XlsUtils {
-    /**
-     * @param xls XlsDto实体类的一个对象
-     * @throws java.io.IOException
-     * @throws Exception           在导入Excel的过程中抛出异常
-     */
-    /*public static void xlsDto2Excel(List<XlsDto> xls, String writeXls) throws IOException {
-        // 获取总列数
-        int totalColumn = xls.size();
-        // 创建Excel文档
-        HSSFWorkbook hwb = new HSSFWorkbook();
-        XlsDto xlsDto = null;
-        // sheet 对应一个工作页
-        String filename = getFileName(writeXls);
-        HSSFSheet sheet = hwb.createSheet(filename);
-        HSSFRow hssfRow = sheet.createRow(0);// 下标为0的行开始
-        HSSFCell[] cells = new HSSFCell[totalColumn];
-        String[] titles = new String[totalColumn];
+public class Xls2K3Utils {
+    private static String[] dataTitles = {"序号", "得分", "学生姓名", "学院名称", "课程名称"};
 
-        titles[0] = "学号";
-        titles[1] = "姓名";
-        titles[2] = "学院";
-        titles[3] = "课程名";
-        titles[4] = "成绩";
 
-        for (int i = 0; i < totalColumn; i++) {
-            cells[i] = hssfRow.createCell(i);
-            cells[i].setCellValue(new HSSFRichTextString(titles[i]));
-        }
-        for (int i = 0; i < xls.size(); i++) {
-            // 创建一行
-            HSSFRow row = sheet.createRow(i + 1);
-            // 得到要插入的每一条记录
-            xlsDto = xls.get(i);
-            for (int j = 0; j <= titles.length - 1; j++) {
-                // 在一行内循环
-                HSSFCell stuNo = row.createCell(0);
-                stuNo.setCellValue(xlsDto.getStuNo());
-                HSSFCell name = row.createCell(1);
-                name.setCellValue(xlsDto.getName());
-                HSSFCell college = row.createCell(2);
-                college.setCellValue(xlsDto.getCollege());
-                HSSFCell courseName = row.createCell(3);
-                courseName.setCellValue(xlsDto.getCourseName());
-                HSSFCell score = row.createCell(4);
-                score.setCellValue(xlsDto.getScore());
-
-            }
-        }
-        // 创建文件输出流,准备输出电子表格
-        OutputStream out = new FileOutputStream(writeXls);
-        hwb.write(out);
-        out.close();
-        System.out.println("数据库导出成功");
-
-    }*/
-    public static String getFileName(String name) {
-        if (name.contains("/") && name.contains(".")) {
-            int startIndex = name.lastIndexOf("/");
-            int endIndex = name.lastIndexOf(".");
-            name = name.substring(startIndex + 1, endIndex);
-        }
-        if (name.contains(".") && !name.contains("/")) {
-            int endIndex = name.lastIndexOf(".");
-            name = name.substring(0, endIndex);
-        }
-        return name;
-    }
 
     /**
      * 读取xls文件内容
@@ -161,29 +97,24 @@ public class XlsUtils {
                 if (null == hssfRow) {
                     continue;
                 }
-
                 //当读取到第一行数据(非空),查看其关键字,如title,则放入对应的bean属性中
-
                 boolean hasTitle = false;
                 for (int k = 0; k < dataTitles.length; k++) {
                     HSSFCell temp = hssfRow.getCell(k);
                     if (null != temp) {
                         String title = getValue(temp);
-                        cellTitles[k] = title;
-                        /*if (null != title) {
-                            cellTitles[k] = title;
-                            if (titles.equals(cellTitles[k])) {
-                                hasTitle = true;
-                                //记录下标题的行号
+                        for (int l = 0; l < dataTitles.length; l++) {
+                            if (dataTitles[l].equals(title)) {
+                                cellTitles[k] = title;
                                 rowIndex = j;
                             }
-                        }*/
+                        }
                     }
                 }
-                rowIndex = j;
-                break ok;
-                //if(hasTitle)break ok;
+
             }
+            break ok;
+            //if(hasTitle)break ok;
         }
 
         lists.add(rowIndex);//+1数据的当前行
@@ -191,7 +122,6 @@ public class XlsUtils {
         return lists;
     }
 
-    private static String[] dataTitles = {"序号", "得分", "学生姓名", "学院名称", "课程名称"};
 
     public static List arrangeList(List lists, String readXls) throws IOException {
         List myList = new ArrayList();
@@ -217,32 +147,32 @@ public class XlsUtils {
 
             for (int i = 0; i < titles.length; i++) {
 
-                int stunoIndex = readXlsTitileIndex(titles, "序号");
+                int stunoIndex = readXlsTitileIndex(titles, dataTitles[0]);
                 HSSFCell stuNo = hssfRow.getCell(stunoIndex);
                 if (null == stuNo) {
                     continue;
                 }
                 xlsDto.setStuNo(getValue(stuNo));
-                int scoreIndex = readXlsTitileIndex(titles, "得分");
+                int scoreIndex = readXlsTitileIndex(titles, dataTitles[1]);
 
                 HSSFCell score = hssfRow.getCell(scoreIndex);
                 if (null == score) {
                     continue;
                 }
                 xlsDto.setScore(Float.parseFloat(getValue(score)));
-                int nameIndex = readXlsTitileIndex(titles, "学生姓名");
+                int nameIndex = readXlsTitileIndex(titles, dataTitles[2]);
                 HSSFCell name = hssfRow.getCell(nameIndex);
                 if (null == name) {
                     continue;
                 }
                 xlsDto.setName(getValue(name));
-                int collegeIndex = readXlsTitileIndex(titles, "学院名称");
+                int collegeIndex = readXlsTitileIndex(titles, dataTitles[3]);
                 HSSFCell college = hssfRow.getCell(collegeIndex);
                 if (null == college) {
                     continue;
                 }
                 xlsDto.setCollege(getValue(college));
-                int subjectIndex = readXlsTitileIndex(titles, "课程名称");
+                int subjectIndex = readXlsTitileIndex(titles, dataTitles[4]);
                 HSSFCell courseName = hssfRow.getCell(subjectIndex);
                 if (null == courseName) {
                     continue;
@@ -297,4 +227,71 @@ public class XlsUtils {
 
     }
 
+    public static String getFileName(String name) {
+        if (name.contains("/") && name.contains(".")) {
+            int startIndex = name.lastIndexOf("/");
+            int endIndex = name.lastIndexOf(".");
+            name = name.substring(startIndex + 1, endIndex);
+        }
+        if (name.contains(".") && !name.contains("/")) {
+            int endIndex = name.lastIndexOf(".");
+            name = name.substring(0, endIndex);
+        }
+        return name;
+    }
+    /**
+     * @param xls XlsDto实体类的一个对象
+     * @throws java.io.IOException
+     * @throws Exception           在导入Excel的过程中抛出异常
+     */
+    /*public static void xlsDto2Excel(List<XlsDto> xls, String writeXls) throws IOException {
+        // 获取总列数
+        int totalColumn = xls.size();
+        // 创建Excel文档
+        HSSFWorkbook hwb = new HSSFWorkbook();
+        XlsDto xlsDto = null;
+        // sheet 对应一个工作页
+        String filename = getFileName(writeXls);
+        HSSFSheet sheet = hwb.createSheet(filename);
+        HSSFRow hssfRow = sheet.createRow(0);// 下标为0的行开始
+        HSSFCell[] cells = new HSSFCell[totalColumn];
+        String[] titles = new String[totalColumn];
+
+        titles[0] = "学号";
+        titles[1] = "姓名";
+        titles[2] = "学院";
+        titles[3] = "课程名";
+        titles[4] = "成绩";
+
+        for (int i = 0; i < totalColumn; i++) {
+            cells[i] = hssfRow.createCell(i);
+            cells[i].setCellValue(new HSSFRichTextString(titles[i]));
+        }
+        for (int i = 0; i < xls.size(); i++) {
+            // 创建一行
+            HSSFRow row = sheet.createRow(i + 1);
+            // 得到要插入的每一条记录
+            xlsDto = xls.get(i);
+            for (int j = 0; j <= titles.length - 1; j++) {
+                // 在一行内循环
+                HSSFCell stuNo = row.createCell(0);
+                stuNo.setCellValue(xlsDto.getStuNo());
+                HSSFCell name = row.createCell(1);
+                name.setCellValue(xlsDto.getName());
+                HSSFCell college = row.createCell(2);
+                college.setCellValue(xlsDto.getCollege());
+                HSSFCell courseName = row.createCell(3);
+                courseName.setCellValue(xlsDto.getCourseName());
+                HSSFCell score = row.createCell(4);
+                score.setCellValue(xlsDto.getScore());
+
+            }
+        }
+        // 创建文件输出流,准备输出电子表格
+        OutputStream out = new FileOutputStream(writeXls);
+        hwb.write(out);
+        out.close();
+        System.out.println("数据库导出成功");
+
+    }*/
 }
