@@ -19,14 +19,17 @@ import java.util.List;
 public class Xls2K7Utils {
 
     public static String getFileName(String name) {
-        if (name.contains("/") && name.contains(".")) {
-            int startIndex = name.lastIndexOf("/");
+
+        if (name.contains("/")) {
+            if (name.indexOf(".") != -1) {
+                int startIndex = name.lastIndexOf("/");
+                int endIndex = name.lastIndexOf(".");
+                name = name.substring(startIndex + 1, endIndex);
+            }
+        } else {
             int endIndex = name.lastIndexOf(".");
-            name = name.substring(startIndex + 1, endIndex);
-        }
-        if (name.contains(".") && !name.contains("/")) {
-            int endIndex = name.lastIndexOf(".");
-            name = name.substring(0, endIndex);
+            if (endIndex != -1)
+                name = name.substring(0, endIndex);
         }
         return name;
     }
@@ -84,7 +87,6 @@ public class Xls2K7Utils {
 
 
     public static List arrangeList(List lists, String readXls) throws IOException {
-        List myList = new ArrayList();
         InputStream in = new FileInputStream(readXls);
         XSSFWorkbook XSSFWorkbook = new XSSFWorkbook(in);
         XlsDto xlsDto = null;
@@ -190,6 +192,8 @@ public class Xls2K7Utils {
         }
 
     }
+
+
     /**
      * 读取xls文件内容
      *
