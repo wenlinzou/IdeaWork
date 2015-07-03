@@ -15,9 +15,7 @@ public class Xls2K3Utils {
     public static List getTitlesAndRowIndex(String readXls) throws IOException {
         InputStream in = new FileInputStream(readXls);
         HSSFWorkbook hssfWorkbook = new HSSFWorkbook(in);
-        XlsDto xlsDto = null;
         List lists = new ArrayList();
-
         String[] cellTitles = new String[Title.dataTitles.length];
         int rowIndex = -1;
         // 循环工作表sheet
@@ -47,10 +45,8 @@ public class Xls2K3Utils {
                         }
                     }
                 }
-
             }
             break ok;
-            //if(hasTitle)break ok;
         }
 
         lists.add(rowIndex);//+1数据的当前行
@@ -93,6 +89,13 @@ public class Xls2K3Utils {
         return dtolists;
     }
 
+    /**
+     * 每列的值赋予对象
+     *
+     * @param xlsDto
+     * @param titles
+     * @param hssfRow
+     */
     private static void setValueWithCell(XlsDto xlsDto, String[] titles, HSSFRow hssfRow) {
         int stunoIndex = readXlsTitleIndex(titles, Title.dataTitles[0]);
         HSSFCell stuNo = hssfRow.getCell(stunoIndex);
@@ -191,15 +194,6 @@ public class Xls2K3Utils {
     }
 
     public static String getFileName(String name) {
-        /*if (name.contains("/") && name.contains(".")) {
-            int startIndex = name.lastIndexOf("/");
-            int endIndex = name.lastIndexOf(".");
-            name = name.substring(startIndex + 1, endIndex);
-        }
-        if (name.contains(".") && !name.contains("/")) {
-            int endIndex = name.lastIndexOf(".");
-            name = name.substring(0, endIndex);
-        }*/
         if (name.contains("/")) {
             if (name.indexOf(".") != -1) {
                 int startIndex = name.lastIndexOf("/");
