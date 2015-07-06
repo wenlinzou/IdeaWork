@@ -39,11 +39,20 @@ public class XlsService {
         return iList;
     }
 
+    public List getXlsAllInfo(String xlsPath) throws IOException {
+        List iList = null;
+        if (xlsPath.lastIndexOf("xls") != -1) {
+            iList = Xls2K3Utils.readXls(xlsPath);
+        }
+        return iList;
+    }
+
 
     public static void main(String[] args) throws IOException {
 //        bean.XlsDto xls = null;
         String readXls = "f:/zzz/test.xlsx";
         String writeXls = "f:/zzz/test1.xls";
+        String allXls = "f:/zzz/刘梦起好人卡.xls";
 
         /*List<bean.XlsDto> list = utils.XlsUtils.readXls(readXls);
         // utils.XlsUtils.xlsDto2Excel(list, writeXls);
@@ -53,7 +62,11 @@ public class XlsService {
             System.out.println(xls.getStuNo() + "\t" + xls.getName() + "\t" + xls.getCollege() + "\t" + xls.getCourseName() + "\t" + xls.getScore());
         }*/
         List iList = null;
-        if (readXls.lastIndexOf("xlsx") != -1) {
+        iList = Xls2K3Utils.readXls(allXls);
+        for (int i = 0; i < iList.size(); i++) {
+            System.out.println(iList.get(i));
+        }
+        /*if (readXls.lastIndexOf("xlsx") != -1) {
             iList = Xls2K7Utils.arrangeList(Xls2K7Utils.getTitlesAndRowIndex(readXls), readXls);
 
         } else {
@@ -70,6 +83,6 @@ public class XlsService {
                 XlsDto xls = (XlsDto) iList.get(i);
                 System.out.println(xls.getStuNo() + "\t" + xls.getScore() + "\t" + xls.getName() + "\t" + xls.getCollege() + "\t" + xls.getCourseName());
             }
-        }
+        }*/
     }
 }

@@ -46,5 +46,10 @@
         <div id="progressNumber"></div>
     </form>
 </div>
+<div>
+    <form action="allxls.html" method="post">
+        <input type="submit" value="checkxls">
+    </form>
+</div>
 </body>
 </html>

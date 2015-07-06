@@ -7,8 +7,16 @@
         <servlet-name>ShowXlsServlet</servlet-name>
         <servlet-class>servlet.ShowXlsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AllXlsServlet</servlet-name>
+        <servlet-class>servlet.AllXlsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShowXlsServlet</servlet-name>
         <url-pattern>/showxls.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllXlsServlet</servlet-name>
+        <url-pattern>/allxls.html</url-pattern>
     </servlet-mapping>
 </web-app>

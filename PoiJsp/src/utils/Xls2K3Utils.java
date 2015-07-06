@@ -54,6 +54,39 @@ public class Xls2K3Utils {
         return lists;
     }
 
+    public static List readXls(String readXls) throws IOException {
+        InputStream in = new FileInputStream(readXls);
+        HSSFWorkbook hssfWorkbook = new HSSFWorkbook(in);
+        List lists = new ArrayList();
+        //sheet loop
+        int sheetNo = hssfWorkbook.getNumberOfSheets();
+        for (int i = 0; i < sheetNo; i++) {
+            HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(i);
+            if (null == hssfSheet) {
+                continue;
+            }
+            //loop row
+            for (int j = 0; j <= hssfSheet.getLastRowNum(); j++) {
+                HSSFRow hssfRow = hssfSheet.getRow(j);
+                if (null == hssfRow) {
+                    continue;
+                }
+                //loop cell
+                for (int k = 0; k <= hssfRow.getLastCellNum(); k++) {
+                    HSSFCell hssfCell = hssfRow.getCell(k);
+                    if (null == hssfCell) {
+                        continue;
+                    }
+                    lists.add(getValue(hssfCell));
+                }
+                lists.add("<br/>");
+            }
+        }
+
+        return lists;
+    }
+
+
 
     public static List arrangeList(List lists, String readXls) throws IOException {
         InputStream in = new FileInputStream(readXls);
