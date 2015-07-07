@@ -17,6 +17,25 @@ public class AllXlsServlet extends HttpServlet {
         XlsService xlsService = new XlsService();
         String xlsPath = "f:/zzz/刘梦起好人卡.xls";
         List list = xlsService.getXlsAllInfo(xlsPath);
+        System.out.println(list.size());
+
+
+        for (int i = 0; i < list.size(); i++) {
+            list.set(i, "<td>" + list.get(i) + "</td>");
+            if (i == 0)
+                list.set(0, "<tr>" + list.get(0));
+            if (list.get(i).toString().contains("br") && i < list.size() - 2) {
+                list.set(i, "</tr><tr>");
+            }
+            if (list.get(i).toString().contains("br") && i == list.size() - 1) {
+                list.set(i, "</tr>");
+            }
+        }
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+
+
         /*for (int i = 0; i < list.size(); i++) {
             if(i==0){
                 list.add(0,"<tr>");
