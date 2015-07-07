@@ -1,3 +1,17 @@
 2k7
 xmlbean-2.3.0.jar
 dom4j-1.6.1.jar
+
+xls
+poi-3.10.1-20140818.jar
+poi-examples-3.10.1-20140818.jar
+poi-excelant-3.10.1-20140818.jar
+poi-ooxml-3.10.1-20140818.jar
+poi-ooxml-schemas-3.10.1-20140818.jar
+poi-scratchpad-3.10.1-20140818.jar
+
+
+c:jstl
+taglibs-standard-impl-1.2.1.jar
+jstl-impl.jar
+javax.servlet.jsp.jstl.jar
