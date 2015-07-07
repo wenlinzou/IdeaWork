@@ -31,28 +31,9 @@ public class AllXlsServlet extends HttpServlet {
                 list.set(i, "</tr>");
             }
         }
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
 
 
-        /*for (int i = 0; i < list.size(); i++) {
-            if(i==0){
-                list.add(0,"<tr>");
-            }
-            if(list.get(i).toString().contains("<br/>")){
-                list.add(i,"</tr>");
-                if(i<list.size()-1){
-                    list.add(i+1,"<tr>");
-                }
-            }
-            list.add(i,"<td>"+list.get(i)+"</td>");
 
-        }
-
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }*/
         request.setAttribute("lists", list);
         request.getRequestDispatcher("showXlsAllInfo.jsp").forward(request, response);
     }
