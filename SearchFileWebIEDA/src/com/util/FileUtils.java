@@ -3,6 +3,7 @@ package com.util;
 import com.util.filter.ContainsSuffixFilter;
 import com.util.filter.ContainsWordFilter;
 import com.util.filter.FilenameSuffixFilter;
+import com.util.filter.PrefixFilter;
 
 import java.io.*;
 import java.text.DateFormat;
@@ -15,6 +16,59 @@ import java.util.*;
 public class FileUtils {
     private static int SIZE = 1024 * 1024;
 
+    /**
+     * 获取全路径下的文件名称
+     *
+     * @param filePath
+     * @param startChar
+     * @param endChar
+     * @return
+     */
+    public static String getFilePathFileName(String filePath, String startChar, String endChar) {
+        String fileName = "";
+        filePath = filePath.replace("\\", "/");
+        int startIndex = filePath.lastIndexOf(startChar);
+        int endIndex = filePath.lastIndexOf(endChar);
+        if (startIndex < endIndex && startIndex != -1) {
+            fileName = filePath.substring(startIndex + 1, endIndex);
+        }
+        return fileName;
+    }
+
+    /**
+     * 获取全路径的路径
+     *
+     * @param fileName
+     * @param endChar
+     * @return
+     */
+    public static String getFilepath(String fileName, String endChar) {
+        String filePath = "";
+        fileName = fileName.replace("\\", "/");
+        int endIndex = fileName.lastIndexOf(endChar);
+        if (endIndex != -1) {
+            filePath = fileName.substring(0, endIndex + 1);
+        }
+        return filePath;
+    }
+
+    /**
+     * 截取全路径下的文件后缀
+     *
+     * @param filePath
+     * @param startChar
+     * @return
+     */
+    public static String getFileSuffix(String filePath, String startChar) {
+        String suffix = "";
+        filePath = filePath.replace("\\", "/");
+        int startIndex = filePath.lastIndexOf(startChar);
+        if (startIndex != -1) {
+            suffix = filePath.substring(startIndex + 1);
+        }
+        return suffix;
+    }
+
     /*
      * 查询文件名及后缀
 	 */
@@ -23,17 +77,22 @@ public class FileUtils {
     }
 
     /*
-	 * 模糊查询文件名
+     * 模糊查询文件名
 	 */
     public void searchIgnoreFilename(File dir, ContainsWordFilter filter, List<String> fileLists) {
         myFilter(dir, filter, fileLists);
     }
 
     /*
-	 * 搜索该目录下包含此后缀名的文件
+     * 搜索该目录下包含此后缀名的文件
 	 */
     public void accpetSuffix(File dir, ContainsSuffixFilter filter, List<String> fileLists) {
         myFilter(dir, filter, fileLists);
+    }
+
+    public List<String> accpetPrefix(File dir, PrefixFilter filter, List<String> fileLists) {
+        myFilter(dir, filter, fileLists);
+        return fileLists;
     }
 
     //fatherFilter=====================

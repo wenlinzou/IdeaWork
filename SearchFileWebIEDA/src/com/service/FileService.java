@@ -2,10 +2,12 @@ package com.service;
 
 import com.bean.FileI;
 import com.util.FileUtils;
+import com.util.PhotoUtils;
 import com.util.SpiderURLUtils;
 import com.util.filter.ContainsSuffixFilter;
 import com.util.filter.ContainsWordFilter;
 import com.util.filter.FilenameSuffixFilter;
+import com.util.filter.PrefixFilter;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +26,25 @@ public class FileService {
     private FileUtils fileUtils = new FileUtils();
 //    private ITextPdf itd = new ITextPdf();
 
+    public void getUrlPhotoMakeItGrey(String imgpath) {
+        PhotoUtils.saveToFile(imgpath);
+        System.out.println("save photo ok");
+        String filename = FileUtils.getFilePathFileName(imgpath, "/", ".");
+        List<String> allFilapath = new ArrayList<String>();
+
+        PrefixFilter filter = new PrefixFilter(filename, filename);
+        String saveLocalPhoto = "D:\\Apache_Tomcat\\apache-tomcat-7.0.54\\bin\\delete";
+
+        allFilapath = fileUtils.accpetPrefix(new File(saveLocalPhoto), filter, allFilapath);
+        System.out.println(allFilapath.size() + allFilapath.get(0).toString());
+
+
+        try {
+            PhotoUtils.newGrayImage(allFilapath.get(0).toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public List<String> queryFileLists(FileI iFile) {
         List<String> fileList = new ArrayList<String>();
         System.out.println("==================\n搜索次数:" + (++COUNT) + "\t搜索上限:" + SIZE_SEARCH);

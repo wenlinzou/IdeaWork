@@ -1,3 +1,8 @@
+/*window.onload = countListener;
+ function countListener(){
+ var myurl = location.host;
+ window.location.href = "http://" + myurl + "/SearchFileWebIDEA/index.html";
+ }*/
 //验证码
 function changeImage(img) {
     img.src = img.src + "?" + new Date().getDate();

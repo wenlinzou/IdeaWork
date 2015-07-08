@@ -4,8 +4,13 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <display-name>index.html</display-name>
-
-
+    <!-- <listener>
+         <listener-class>com.listener.OnlineListener</listener-class>
+     </listener>
+     <session-config>
+         <session-timeout>2</session-timeout>
+     </session-config>
+ -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.servlet.LoginServlet</servlet-class>
@@ -74,6 +79,14 @@
         <servlet-name>Html2DocServlet</servlet-name>
         <servlet-class>com.servlet.Html2DocServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GreyPhotoServlet</servlet-name>
+        <servlet-class>com.servlet.GreyPhotoServlet</servlet-class>
+    </servlet>
+    <!--<servlet>
+        <servlet-name>IndexJSPServlet</servlet-name>
+        <servlet-class>com.servlet.IndexServlet</servlet-class>
+    </servlet>-->
 
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -143,5 +156,14 @@
         <servlet-name>Html2DocServlet</servlet-name>
         <url-pattern>/html2doc.html</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GreyPhotoServlet</servlet-name>
+        <url-pattern>/photoGrey.html</url-pattern>
+    </servlet-mapping>
+    <!--<servlet-mapping>
+        <servlet-name>IndexJSPServlet</servlet-name>
+        <url-pattern>/indexJSP.html</url-pattern>
+    </servlet-mapping>-->
+
 
 </web-app>
