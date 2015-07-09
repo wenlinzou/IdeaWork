@@ -26,7 +26,8 @@ public class FileService {
     private FileUtils fileUtils = new FileUtils();
 //    private ITextPdf itd = new ITextPdf();
 
-    public void getUrlPhotoMakeItGrey(String imgpath) {
+    public boolean getUrlPhotoMakeItGrey(String imgpath) {
+        boolean pass = false;
         PhotoUtils.saveToFile(imgpath);
         System.out.println("save photo ok");
         String filename = FileUtils.getFilePathFileName(imgpath, "/", ".");
@@ -41,9 +42,12 @@ public class FileService {
 
         try {
             PhotoUtils.newGrayImage(allFilapath.get(0).toString());
+            pass = true;
         } catch (IOException e) {
             e.printStackTrace();
+            pass = false;
         }
+        return pass;
     }
     public List<String> queryFileLists(FileI iFile) {
         List<String> fileList = new ArrayList<String>();

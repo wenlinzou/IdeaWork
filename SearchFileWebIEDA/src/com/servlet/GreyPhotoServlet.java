@@ -29,7 +29,11 @@ public class GreyPhotoServlet extends HttpServlet {
         if ("GET".equals(method)) {
             byte[] bs = imgpath.getBytes("ISO8859-1");
             imgpath = new String(bs, "UTF-8");
-            fileService.getUrlPhotoMakeItGrey(imgpath);
+            boolean pass = fileService.getUrlPhotoMakeItGrey(imgpath);
+            if (pass) {
+                request.setAttribute("existPhoto", "true");
+                request.getRequestDispatcher("otherInfo/photoGrey.jsp").forward(request, response);
+            }
 //            PhotoUtils.saveToFile(imgpath);
         }
 //        String filename = FileUtils.getFilePathFileName(imgpath,"/",".");
