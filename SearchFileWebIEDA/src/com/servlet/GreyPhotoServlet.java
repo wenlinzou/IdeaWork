@@ -19,6 +19,8 @@ import java.util.List;
 public class GreyPhotoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String imgpath = request.getParameter("imgPath");
+        String webName = request.getContextPath();
+        System.out.println("webName:" + webName);
         if (imgpath == null) {
             System.out.println("is null");
             return;
@@ -29,9 +31,13 @@ public class GreyPhotoServlet extends HttpServlet {
         if ("GET".equals(method)) {
             byte[] bs = imgpath.getBytes("ISO8859-1");
             imgpath = new String(bs, "UTF-8");
-            boolean pass = fileService.getUrlPhotoMakeItGrey(imgpath);
+            if (imgpath.endsWith("Copy.jpg")) {
+                request.getRequestDispatcher("otherInfo/photoGrey.jsp").forward(request, response);
+                return;
+            }
+            boolean pass = fileService.getUrlPhotoMakeItGrey(imgpath, webName);
             if (pass) {
-                request.setAttribute("existPhoto", "true");
+                request.setAttribute("existPhoto", "1");
                 request.getRequestDispatcher("otherInfo/photoGrey.jsp").forward(request, response);
             }
 //            PhotoUtils.saveToFile(imgpath);

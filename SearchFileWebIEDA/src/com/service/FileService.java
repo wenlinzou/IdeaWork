@@ -26,18 +26,25 @@ public class FileService {
     private FileUtils fileUtils = new FileUtils();
 //    private ITextPdf itd = new ITextPdf();
 
-    public boolean getUrlPhotoMakeItGrey(String imgpath) {
+    public boolean getUrlPhotoMakeItGrey(String imgpath, String webName) {
         boolean pass = false;
-        PhotoUtils.saveToFile(imgpath);
+
+        File tempf = new File(System.getProperty("user.dir"));
+        //D:\Apache_Tomcat\apache-tomcat-7.0.54
+        String tomcat = tempf.getParent();
+        //webname /SearchFileWeb
+        String saveLocalPhoto = tomcat + "/webapps" + webName + "/resource/images";
+        System.out.println("FileService-saveLocalPhoto" + saveLocalPhoto);
+        PhotoUtils.saveToFile(saveLocalPhoto);
         System.out.println("save photo ok");
+
         String filename = FileUtils.getFilePathFileName(imgpath, "/", ".");
         List<String> allFilapath = new ArrayList<String>();
 
         PrefixFilter filter = new PrefixFilter(filename);
-        String saveLocalPhoto = "D:\\Apache_Tomcat\\apache-tomcat-7.0.54\\bin\\delete";
 
         allFilapath = fileUtils.accpetPrefix(new File(saveLocalPhoto), filter, allFilapath);
-        System.out.println(allFilapath.size() + allFilapath.get(0).toString());
+        System.out.println("FileService-Photo:size" + allFilapath.size() + allFilapath.get(0).toString());
 
 
         try {

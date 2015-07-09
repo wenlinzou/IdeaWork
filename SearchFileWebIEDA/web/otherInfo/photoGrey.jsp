@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Pet
-  Date: 2015-07-08
-  Time: 16:00
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -18,8 +11,14 @@
     <title>显示图片</title>
 </head>
 <body>
-<a id="jumppath" href="" onclick="getImgPath();"><img id="imgPath" src="../resource/images/s6_fb.jpg" alt="beauty"/></a>
-
+<c:if test="${existPhoto==null }">
+    <a id="jumppath" href="" onclick="getImgPath();"><img id="imgPath" src="<%=basePath %>resource/images/s6_fb.jpg"
+                                                          alt="beauty"/></a>
+</c:if>
+<c:if test="${existPhoto!=null }">
+    <a id="jumppath" href="" onclick="getImgPath();"><img id="imgPath" src="<%=basePath %>resource/images/s6_fbCopy.jpg"
+                                                          alt="beauty"/></a>
+</c:if>
 <script type="text/javascript">
     function getImgPath() {
         var imgObj = document.getElementById("imgPath");

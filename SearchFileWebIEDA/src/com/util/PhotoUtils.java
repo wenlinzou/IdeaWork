@@ -11,6 +11,7 @@ import java.net.URL;
  */
 public class PhotoUtils {
     public static void saveToFile(String destUrl) {
+        System.out.println("save Photo path:" + destUrl);
         FileOutputStream fos = null;
         BufferedInputStream bis = null;
         HttpURLConnection httpUrl = null;
@@ -29,10 +30,10 @@ public class PhotoUtils {
             String filename = FileUtils.getFilePathFileName(destUrl, "/", ".");
 
             String suffix = FileUtils.getFileSuffix(destUrl, ".");
-            String newFilePath = System.getProperty("user.dir") + "/delete/" + filename + "_Copy_ucandelete." + suffix;
+            String newFilePath = destUrl + "/" + filename + "_Copy_ucandelete." + suffix;
 
             fos = new FileOutputStream(newFilePath);
-            System.out.println("photo:" + newFilePath);
+            System.out.println("saved copy photo path:" + newFilePath);
             while ((size = bis.read(buf)) != -1) {
                 fos.write(buf, 0, size);
             }
