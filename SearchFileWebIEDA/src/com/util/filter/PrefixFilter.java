@@ -7,11 +7,9 @@ import java.io.FilenameFilter;
  * Created by Pet on 2015-07-08.
  */
 public class PrefixFilter implements FilenameFilter {
-    private String filename;
     private String prefix;
 
-    public PrefixFilter(String filename, String prefix) {
-        this.filename = filename;
+    public PrefixFilter(String prefix) {
         this.prefix = prefix;
     }
 

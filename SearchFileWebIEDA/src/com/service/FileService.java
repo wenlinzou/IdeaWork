@@ -33,7 +33,7 @@ public class FileService {
         String filename = FileUtils.getFilePathFileName(imgpath, "/", ".");
         List<String> allFilapath = new ArrayList<String>();
 
-        PrefixFilter filter = new PrefixFilter(filename, filename);
+        PrefixFilter filter = new PrefixFilter(filename);
         String saveLocalPhoto = "D:\\Apache_Tomcat\\apache-tomcat-7.0.54\\bin\\delete";
 
         allFilapath = fileUtils.accpetPrefix(new File(saveLocalPhoto), filter, allFilapath);
