@@ -41,7 +41,8 @@ public class Jxl2K3Utils {
 
             //创建一个数组 用来存储每一列的值
             String[] str = new String[sheet.getColumns()];
-
+            if (null == str)
+                continue;
             //列数
             for (int j = 0; j < sheet.getColumns(); j++) {
 
@@ -52,7 +53,6 @@ public class Jxl2K3Utils {
                     continue;
                 else
                     list.add((str[j]));
-                System.out.println(str[j]);
             }
             //把刚获取的列存入list
             list.add("br");

@@ -37,15 +37,10 @@ public class XlsService {
             iList = Xls2K3Utils.arrangeList(Xls2K3Utils.getTitlesAndRowIndex(xlsPath), xlsPath);
         }
         String[] temptitles = (String[]) iList.get(0);
-        for (int i = 0; i < temptitles.length; i++) {
-//System.out.print(temptitles[i] + "\t");
-        }
-        System.out.println();
 
         for (int i = 0; i < iList.size(); i++) {
             if (iList.get(i) instanceof XlsDto) {
                 XlsDto xls = (XlsDto) iList.get(i);
-//System.out.println(xls.getStuNo() + "\t" + xls.getScore() + "\t" + xls.getName() + "\t" + xls.getCollege() + "\t" + xls.getCourseName());
             }
         }
 
@@ -98,44 +93,9 @@ public class XlsService {
         }*/
         List list = null;
         list = Xls2K3Utils.readXls(allXls);
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
-
-        for (int i = 0; i < list.size(); i++) {
-            list.set(i, "<td>" + list.get(i) + "</td>");
-            if (i == 0)
-                list.set(0, "<tr>" + list.get(0));
-            if (list.get(i).toString().contains("br") && i < list.size() - 2) {
-                list.set(i, "</tr><tr>");
-            }
-            if (list.get(i).toString().contains("br") && i == list.size() - 1) {
-                list.set(i, "</tr>");
-            }
 
 
-        }
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
 
-        /*if (readXls.lastIndexOf("xlsx") != -1) {
-            iList = Xls2K7Utils.arrangeList(Xls2K7Utils.getTitlesAndRowIndex(readXls), readXls);
 
-        } else {
-            iList = Xls2K3Utils.arrangeList(Xls2K3Utils.getTitlesAndRowIndex(readXls), readXls);
-        }
-        String[] temptitles = (String[]) iList.get(0);
-        for (int i = 0; i < temptitles.length; i++) {
-            System.out.print(temptitles[i] + "\t");
-        }
-        System.out.println();
-
-        for (int i = 0; i < iList.size(); i++) {
-            if (iList.get(i) instanceof XlsDto) {
-                XlsDto xls = (XlsDto) iList.get(i);
-                System.out.println(xls.getStuNo() + "\t" + xls.getScore() + "\t" + xls.getName() + "\t" + xls.getCollege() + "\t" + xls.getCourseName());
-            }
-        }*/
     }
 }

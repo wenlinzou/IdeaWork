@@ -32,7 +32,6 @@ public class Xls2K3Utils {
                     continue;
                 }
                 //当读取到第一行数据(非空),查看其关键字,如title,则放入对应的bean属性中
-                boolean hasTitle = false;
                 for (int k = 0; k < Title.dataTitles.length; k++) {
                     HSSFCell temp = hssfRow.getCell(k);
                     if (null != temp) {
