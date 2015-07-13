@@ -1,6 +1,8 @@
 package service;
 
 import bean.XlsDto;
+import jxl.read.biff.BiffException;
+import utils.Jxl2K3Utils;
 import utils.Xls2K7Utils;
 import utils.Xls2K3Utils;
 
@@ -11,6 +13,17 @@ import java.util.List;
  * Created by Pet on 2015-06-30.
  */
 public class XlsService {
+
+    public List getJxlReadXls(String xlsPath) throws IOException, BiffException {
+        List list = null;
+        if (xlsPath.lastIndexOf(".xls") != -1) {
+            list = Jxl2K3Utils.readXls(xlsPath);
+            arrangeListByTable(list);
+        }
+        return list;
+    }
+
+
     /**
      * @param xlsPath
      * @return
@@ -40,13 +53,35 @@ public class XlsService {
     }
 
     public List getXlsAllInfo(String xlsPath) throws IOException {
-        List iList = null;
+        List list = null;
         if (xlsPath.lastIndexOf("xls") != -1) {
-            iList = Xls2K3Utils.readXls(xlsPath);
+            list = Xls2K3Utils.readXls(xlsPath);
+            arrangeListByTable(list);
         }
-        return iList;
+        return list;
     }
 
+
+    /**
+     * 将list整合成table
+     *
+     * @param list
+     * @return
+     */
+    private static List arrangeListByTable(List list) {
+        for (int i = 0; i < list.size(); i++) {
+            list.set(i, "<td>" + list.get(i) + "</td>");
+            if (i == 0)
+                list.set(0, "<tr>" + list.get(0));
+            if (list.get(i).toString().contains("br") && i < list.size() - 2) {
+                list.set(i, "</tr><tr>");
+            }
+            if (list.get(i).toString().contains("br") && i == list.size() - 1) {
+                list.set(i, "</tr>");
+            }
+        }
+        return list;
+    }
 
     public static void main(String[] args) throws IOException {
 //        bean.XlsDto xls = null;

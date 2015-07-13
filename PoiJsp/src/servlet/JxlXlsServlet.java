@@ -1,5 +1,6 @@
 package servlet;
 
+import jxl.read.biff.BiffException;
 import service.XlsService;
 
 import javax.servlet.ServletException;
@@ -10,18 +11,28 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Pet on 2015-07-06.
+ * Created by Pet on 2015-07-13.
  */
-public class AllXlsServlet extends HttpServlet {
+public class JxlXlsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         XlsService xlsService = new XlsService();
         String xlsPath = "f:/zzz/刘梦起好人卡.xls";
-        List list = xlsService.getXlsAllInfo(xlsPath);
-        System.out.println(list.size());
+        try {
+            List list = xlsService.getJxlReadXls(xlsPath);
 
-        request.setAttribute("lists", list);
-        request.setAttribute("titleinfo", "showAllXls");
-        request.getRequestDispatcher("showXlsAllInfo.jsp").forward(request, response);
+            System.out.println(list.size());
+
+            for (int i = 0; i < list.size(); i++) {
+                System.out.println(list.get(i).toString());
+            }
+
+            request.setAttribute("lists", list);
+            request.setAttribute("titleinfo", "showJxlXls");
+            request.getRequestDispatcher("showXlsAllInfo.jsp").forward(request, response);
+        } catch (BiffException e) {
+            e.printStackTrace();
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

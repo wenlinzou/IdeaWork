@@ -15,3 +15,6 @@ c:jstl
 taglibs-standard-impl-1.2.1.jar
 jstl-impl.jar
 javax.servlet.jsp.jstl.jar
+
+jxl
+jxl.2.6.jar

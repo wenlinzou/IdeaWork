@@ -11,6 +11,10 @@
         <servlet-name>AllXlsServlet</servlet-name>
         <servlet-class>servlet.AllXlsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>JxlXlsServlet</servlet-name>
+        <servlet-class>servlet.JxlXlsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShowXlsServlet</servlet-name>
         <url-pattern>/showxls.html</url-pattern>
@@ -18,5 +22,9 @@
     <servlet-mapping>
         <servlet-name>AllXlsServlet</servlet-name>
         <url-pattern>/allxls.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JxlXlsServlet</servlet-name>
+        <url-pattern>/jxlRead.html</url-pattern>
     </servlet-mapping>
 </web-app>
