@@ -22,8 +22,11 @@ public class JxlXlsServlet extends HttpServlet {
             List list = xlsService.getJxlReadXls(readXls);
 
             System.out.println(list.size());
-
             for (int i = 0; i < list.size(); i++) {
+                System.out.println(list.get(i).toString());
+            }
+
+            /*for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).toString().endsWith("<tr>")) {
                     System.out.println(list.get(i).toString());
 
@@ -35,7 +38,7 @@ public class JxlXlsServlet extends HttpServlet {
                     System.out.print(list.get(i).toString());
 
             }
-
+*/
             request.setAttribute("lists", list);
             request.setAttribute("titleinfo", "showJxlXls");
             request.getRequestDispatcher("showXlsAllInfo.jsp").forward(request, response);
