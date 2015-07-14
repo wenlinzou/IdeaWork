@@ -34,29 +34,39 @@ public class Jxl2K3Utils {
         rwb = Workbook.getWorkbook(stream);
 
         //获取文件的指定工作表 默认的第一个
-        Sheet sheet = rwb.getSheet(0);
+        System.out.println(rwb.getNumberOfSheets());
 
-        //行数(表头的目录不需要，从1开始)
-        for (int i = 0; i < sheet.getRows(); i++) {
-
-            //创建一个数组 用来存储每一列的值
-            String[] str = new String[sheet.getColumns()];
-            if (null == str)
+        //loop sheets
+        for (int k = 0; k < rwb.getNumberOfSheets(); k++) {
+            //行数(表头的目录不需要，从1开始)
+            Sheet sheet = rwb.getSheet(k);
+            if (null == sheet)
                 continue;
-            //列数
-            for (int j = 0; j < sheet.getColumns(); j++) {
-
-                //获取第i行，第j列的值
-                cell = sheet.getCell(j, i);
-                str[j] = cell.getContents();
-                if (str[j] == null || "".equals(str[j]))
+            //loop rows
+            for (int i = 0; i < sheet.getRows(); i++) {
+                Cell[] cells = sheet.getRow(i);
+                if (cells == null || cells.length < 1)
                     continue;
-                else
-                    list.add((str[j]));
+                //创建一个数组 用来存储每一列的值
+                String[] str = new String[sheet.getColumns()];
+
+                //列数
+                for (int j = 0; j < sheet.getColumns(); j++) {
+
+                    //获取第i行，第j列的值
+                    cell = sheet.getCell(j, i);
+                    str[j] = cell.getContents();
+                    if (str[j] == null || "".equals(str[j]))
+                        continue;
+                    else
+                        list.add((str[j]));
+                }
+                //把刚获取的列存入list
+                list.add("br");
             }
-            //把刚获取的列存入list
-            list.add("br");
         }
+
+
         /*for(int i=0;i<list.size();i++){
             String[] str = (String[])list.get(i);
             for(int j=0;j<str.length;j++){

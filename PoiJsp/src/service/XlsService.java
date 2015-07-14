@@ -49,7 +49,7 @@ public class XlsService {
 
     public List getXlsAllInfo(String xlsPath) throws IOException {
         List list = null;
-        if (xlsPath.lastIndexOf("xls") != -1) {
+        if (xlsPath.lastIndexOf(".xls") != -1) {
             list = Xls2K3Utils.readXls(xlsPath);
             arrangeListByTable(list);
         }
@@ -68,7 +68,7 @@ public class XlsService {
             list.set(i, "<td>" + list.get(i) + "</td>");
             if (i == 0)
                 list.set(0, "<tr>" + list.get(0));
-            if (list.get(i).toString().contains("br") && i < list.size() - 2) {
+            else if (list.get(i).toString().contains("br") && i < list.size() - 2) {
                 list.set(i, "</tr><tr>");
             }
             if (list.get(i).toString().contains("br") && i == list.size() - 1) {

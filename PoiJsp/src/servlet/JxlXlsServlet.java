@@ -17,13 +17,23 @@ public class JxlXlsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         XlsService xlsService = new XlsService();
         String xlsPath = "f:/zzz/刘梦起好人卡.xls";
+        String readXls = "f:/zzz/test - 副本.xls";
         try {
-            List list = xlsService.getJxlReadXls(xlsPath);
+            List list = xlsService.getJxlReadXls(readXls);
 
             System.out.println(list.size());
 
             for (int i = 0; i < list.size(); i++) {
-                System.out.println(list.get(i).toString());
+                if (list.get(i).toString().endsWith("<tr>")) {
+                    System.out.println(list.get(i).toString());
+
+                }
+                if (list.get(i).toString().endsWith("</tr>")) {
+                    System.out.println(list.get(i).toString());
+
+                } else
+                    System.out.print(list.get(i).toString());
+
             }
 
             request.setAttribute("lists", list);

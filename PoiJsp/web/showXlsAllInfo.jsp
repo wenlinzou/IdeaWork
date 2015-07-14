@@ -21,22 +21,14 @@
     <title>${titleinfo}</title>
 </head>
 <body>
-<div>
-    <table border="1px;">
-        <c:forEach items="${lists}" var="list">
-            ${list}
-        </c:forEach>
-    </table>
-
-    <%--<table border="1px;">
-            <tr>
-                <c:forEach items="${lists}" var="list">
-                <td>${list}</td>
-                </c:forEach>
-
-            </tr>
-        </table>--%>
-</div>
-
+<center>
+    <div>
+        <table border="1px;">
+            <c:forEach items="${lists}" var="list">
+                ${list}
+            </c:forEach>
+        </table>
+    </div>
+</center>
 </body>
 </html>

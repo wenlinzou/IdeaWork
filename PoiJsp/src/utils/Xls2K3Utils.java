@@ -81,6 +81,7 @@ public class Xls2K3Utils {
                 lists.add("<br/>");
             }
         }
+        in.close();
 
         return lists;
     }
