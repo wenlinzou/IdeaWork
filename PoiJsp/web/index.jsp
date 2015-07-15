@@ -23,7 +23,7 @@
 <form action="showxls.html" method="post">
     <%--<input type="file" value="上传" id="uploadfile"/>--%>
     <%--<input type="button" value="showpath" onclick="showFilePath();">--%>
-    <input type="submit" value="去显示jsp"/>
+        <input type="submit" value="显示Bean's JSP"/>
 </form>
 <%--<a href ="showxls.html">显示这个xls</a>--%>
 <span id="filepath"></span>

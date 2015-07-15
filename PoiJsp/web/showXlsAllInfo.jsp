@@ -29,6 +29,15 @@
             </c:forEach>
         </table>
     </div>
+
+    <c:if test="${titleinfo!=null}">
+        <div>
+            <form action="JxlWrite.html" method="post">
+                <input type="submit" value="writeXlsJxl"/>
+            </form>
+        </div>
+    </c:if>
+
 </center>
 </body>
 </html>

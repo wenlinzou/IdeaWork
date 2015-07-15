@@ -23,6 +23,18 @@ public class XlsService {
         return list;
     }
 
+    public boolean writeXlsByJxl(String xlsPath) {
+        boolean flag = false;
+        try {
+            Jxl2K3Utils.writeXls(xlsPath);
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("---出现异常---");
+        }
+        return flag;
+    }
+
 
     /**
      * @param xlsPath

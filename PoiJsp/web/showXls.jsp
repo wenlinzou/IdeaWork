@@ -19,6 +19,8 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
+    <script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="js/showXls.js"></script>
 </head>
 
 <body>
@@ -30,7 +32,7 @@
                     <td>${mytitle}</td>
                 </c:if>
             </c:forEach>
-            <td>操作</td>
+            <td><input value="Reverse" id="allChecked" type="button" onclick="checkAllByBtn(2);"/></td>
         </tr>
 
         <c:forEach items="${xlsVO }" var="xls" varStatus="status">
@@ -41,12 +43,36 @@
                     <td>${xls.name}</td>
                     <td>${xls.college}</td>
                     <td>${xls.courseName}</td>
-                    <td><input type="checkbox"/>上传</td>
+                    <td><input type="checkbox" name="cellLists" id="cellListId${status.index}"/></td>
                 </tr>
             </c:if>
         </c:forEach>
     </table>
-    <input type="submit" value="提交"/>
+    <input type="button" onclick="getSelectChecked()" value="上传"/>
+
+    <%--<script type="text/javascript" >
+        function getSelectChecked() {
+            var selectedCells = document.getElementsByName("cellLists");
+            for (var i = 0; i < selectedCells.length; i++) {
+                //选中的cells
+                if (selectedCells[i].checked) {
+                    var inputObj = document.getElementsByName("cellLists")[i];
+                    var trNode = inputObj.parentNode.parentNode;
+                    var tdNodes = trNode.childNodes;
+                    var tdLength = tdNodes.length;
+                    tdLength-=1;
+                    //最后的input的不取
+                    for (var j = 0; j < tdLength; j++) {
+                        if (tdNodes[j].nodeName == "#text" && !/\s/.test(tdNodes.nodeValue)) {
+                            trNode.removeChild(tdNodes[j]);
+                        } else {
+                            alert(tdNodes[j].innerHTML);
+                        }
+                    }
+                }
+            }
+        }
+    </script>--%>
 </center>
 </body>
 </html>

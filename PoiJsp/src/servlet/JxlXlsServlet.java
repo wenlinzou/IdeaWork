@@ -22,9 +22,9 @@ public class JxlXlsServlet extends HttpServlet {
             List list = xlsService.getJxlReadXls(readXls);
 
             System.out.println(list.size());
-            for (int i = 0; i < list.size(); i++) {
+            /*for (int i = 0; i < list.size(); i++) {
                 System.out.println(list.get(i).toString());
-            }
+            }*/
 
             /*for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).toString().endsWith("<tr>")) {

@@ -26,16 +26,12 @@ public class Jxl2K3Utils {
         List list = new ArrayList();
         Workbook rwb = null;
         Cell cell = null;
-
         //创建输入流
         InputStream stream = new FileInputStream(readXls);
-
         //获取Excel文件对象
         rwb = Workbook.getWorkbook(stream);
-
         //获取文件的指定工作表 默认的第一个
-        System.out.println(rwb.getNumberOfSheets());
-
+//        System.out.println(rwb.getNumberOfSheets());
         //loop sheets
         for (int k = 0; k < rwb.getNumberOfSheets(); k++) {
             //行数(表头的目录不需要，从1开始)
@@ -49,10 +45,8 @@ public class Jxl2K3Utils {
                     continue;
                 //创建一个数组 用来存储每一列的值
                 String[] str = new String[sheet.getColumns()];
-
                 //列数
                 for (int j = 0; j < sheet.getColumns(); j++) {
-
                     //获取第i行，第j列的值
                     cell = sheet.getCell(j, i);
                     str[j] = cell.getContents();
@@ -65,8 +59,6 @@ public class Jxl2K3Utils {
                 list.add("br");
             }
         }
-
-
         /*for(int i=0;i<list.size();i++){
             String[] str = (String[])list.get(i);
             for(int j=0;j<str.length;j++){
@@ -77,13 +69,14 @@ public class Jxl2K3Utils {
         return list;
     }
 
-    public static void writeXls() {
+    public static void writeXls(String filePath) throws Exception {
         String[] title = {"编号", "产品名称", "产品价格", "产品数量", "生产日期", "产地", "是否出口"};
-        try {
+//        try {
             // 获得开始时间
             long start = System.currentTimeMillis();
             // 输出的excel的路径
-            String filePath = "d:\\testJXL.xls";
+//            String filePath = "d:\\testJXL.xls";
+
             // 创建Excel工作薄
             WritableWorkbook wwb;
             // 新建立一个jxl文件,即在d盘下生成testJXL.xls
@@ -180,10 +173,10 @@ public class Jxl2K3Utils {
             wwb.close();
             long end = System.currentTimeMillis();
             System.out.println("----完成该操作共用的时间是:" + (end - start) / 1000);
-        } catch (Exception e) {
-            System.out.println("---出现异常---");
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            System.out.println("---出现异常---");
+//            e.printStackTrace();
+//        }
     }
 
     public static WritableCellFormat getHeader() {
@@ -191,7 +184,6 @@ public class Jxl2K3Utils {
         try {
             font.setColour(Colour.BLUE);//蓝色字体
         } catch (WriteException e1) {
-            // TODO 自动生成 catch 块
             e1.printStackTrace();
         }
         WritableCellFormat format = new WritableCellFormat(font);
@@ -201,7 +193,6 @@ public class Jxl2K3Utils {
             format.setBorder(Border.ALL, BorderLineStyle.THIN, Colour.BLACK);//黑色边框
             format.setBackground(Colour.YELLOW);//黄色背景
         } catch (WriteException e) {
-            // TODO 自动生成 catch 块
             e.printStackTrace();
         }
         return format;
